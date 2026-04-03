@@ -1,20 +1,32 @@
 {
-  "name": "nosana-eliza-agent",
+  "name": "sirenagent",
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.24.0",
   "scripts": {
+    "build:plugin": "node ./node_modules/typescript/bin/tsc -p ./plugin-siren-agent/tsconfig.json",
+    "siren:report": "pnpm build:plugin && node ./scripts/run-siren-report.mjs",
+    "sync:character": "node ./scripts/sync-character.mjs",
+    "check": "pnpm build:plugin && tsc --noEmit",
+    "prestart": "pnpm build:plugin && pnpm sync:character",
     "start": "elizaos start --character ./characters/agent.character.json",
+    "predev": "pnpm build:plugin && pnpm sync:character",
     "dev": "elizaos dev --character ./characters/agent.character.json"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "@elizaos/core": "^1.0.0",
-    "@elizaos/plugin-anthropic": "^1.5.12",
     "@elizaos/plugin-bootstrap": "^1.0.0",
-    "@elizaos/plugin-openai": "^1.0.0"
+    "@elizaos/plugin-openai": "^1.0.0",
+    "@elizaos/plugin-sql": "^1.0.0",
+    "@elizaos/plugin-telegram": "^1.0.0",
+    "@elizaos/plugin-twitter": "^1.0.0",
+    "plugin-siren-agent": "workspace:*"
   },
   "devDependencies": {
     "@elizaos/cli": "^1.0.0",
+    "bun": "^1.2.10",
     "typescript": "^5.0.0"
   }
 }

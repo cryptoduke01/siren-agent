@@ -19,12 +19,16 @@ WORKDIR /app
 # Install pnpm
 RUN npm install -g pnpm
 
-# Copy package manifest and install dependencies
-COPY package.json ./
-RUN pnpm install
+# Copy package manifests and install dependencies (workspace)
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY plugin-siren-agent/package.json ./plugin-siren-agent/package.json
+RUN pnpm install --frozen-lockfile
 
 # Copy all source files
 COPY . .
+
+# Build the local SirenAgent plugin before startup
+RUN pnpm build:plugin
 
 # Create data directory for SQLite
 RUN mkdir -p /app/data

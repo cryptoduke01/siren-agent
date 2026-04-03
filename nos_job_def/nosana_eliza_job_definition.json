@@ -1,14 +1,38 @@
 {
   "ops": [
     {
-      "id": "agent",
+      "id": "siren-agent",
       "args": {
-        "image": "yourusername/nosana-eliza-agent:latest",
+        "image": "dukedotsol/siren-agent:latest",
         "expose": 3000,
         "env": {
           "OPENAI_API_KEY": "nosana",
-          "OPENAI_API_URL": "TODO: replace with actual Nosana Qwen3.5 endpoint URL",
-          "MODEL_NAME": "qwen3.5-27b",
+          "OPENAI_BASE_URL": "https://4ksj3tve5bazqwkuyqdhwdpcar4yutcuxphwhckrdxmu.node.k8s.prd.nos.ci/v1",
+          "OPENAI_LARGE_MODEL": "Qwen3.5-27B-AWQ-4bit",
+          "OPENAI_SMALL_MODEL": "Qwen3.5-27B-AWQ-4bit",
+          "OPENAI_EMBEDDING_URL": "https://4yiccatpyxx773jtewo5ccwhw1s2hezq5pehndb6fcfq.node.k8s.prd.nos.ci/v1",
+          "OPENAI_EMBEDDING_API_KEY": "nosana",
+          "OPENAI_EMBEDDING_MODEL": "Qwen3-Embedding-0.6B",
+          "OPENAI_EMBEDDING_DIMENSIONS": "1024",
+          "MODEL_NAME": "Qwen3.5-27B-AWQ-4bit",
+          "HELIUS_API_KEY": "",
+          "SIREN_MONITORED_WALLETS": "",
+          "SIREN_TRACKED_TOKENS": "SOL,JUP,BONK,PYTH,WIF,USDC",
+          "SIREN_AUTORUN": "true",
+          "SIREN_REPORT_INTERVAL_MINUTES": "180",
+          "SIREN_DRY_RUN_BROADCAST": "false",
+          "SIREN_USE_MOCK_DATA": "false",
+          "TELEGRAM_BOT_TOKEN": "",
+          "TELEGRAM_CHAT_ID": "",
+          "TWITTER_API_KEY": "",
+          "TWITTER_API_SECRET_KEY": "",
+          "TWITTER_API_SECRET": "",
+          "TWITTER_ACCESS_TOKEN": "",
+          "TWITTER_ACCESS_TOKEN_SECRET": "",
+          "TWITTER_ACCESS_SECRET": "",
+          "TWITTER_ENABLE_POST": "false",
+          "TWITTER_ENABLE_REPLIES": "false",
+          "TWITTER_ENABLE_ACTIONS": "false",
           "SERVER_PORT": "3000",
           "NODE_ENV": "production"
         }
