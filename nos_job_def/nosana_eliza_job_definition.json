@@ -6,6 +6,8 @@
         "image": "dukedotsol/siren-agent:latest",
         "expose": 3000,
         "env": {
+          "NODE_ENV": "production",
+          "SERVER_PORT": "3000",
           "OPENAI_API_KEY": "nosana",
           "OPENAI_BASE_URL": "https://4ksj3tve5bazqwkuyqdhwdpcar4yutcuxphwhckrdxmu.node.k8s.prd.nos.ci/v1",
           "OPENAI_LARGE_MODEL": "Qwen3.5-27B-AWQ-4bit",
@@ -16,8 +18,14 @@
           "OPENAI_EMBEDDING_DIMENSIONS": "1024",
           "MODEL_NAME": "Qwen3.5-27B-AWQ-4bit",
           "HELIUS_API_KEY": "",
+          "SOLANA_RPC_URL": "",
+          "KALSHI_BASE_URL": "https://api.elections.kalshi.com/trade-api/v2",
+          "POLYMARKET_BASE_URL": "https://gateway.polymarket.us",
           "SIREN_MONITORED_WALLETS": "",
           "SIREN_TRACKED_TOKENS": "SOL,JUP,BONK,PYTH,WIF,USDC",
+          "SIREN_WHALE_USD_THRESHOLD": "50000",
+          "SIREN_MAX_MARKETS": "100",
+          "SIREN_MAX_TRANSACTIONS": "25",
           "SIREN_AUTORUN": "true",
           "SIREN_REPORT_INTERVAL_MINUTES": "180",
           "SIREN_DRY_RUN_BROADCAST": "false",
@@ -27,14 +35,15 @@
           "TWITTER_API_KEY": "",
           "TWITTER_API_SECRET_KEY": "",
           "TWITTER_API_SECRET": "",
+          "TWITTER_BEARER_TOKEN": "",
+          "TWITTER_CLIENT_ID": "",
+          "TWITTER_CLIENT_SECRET": "",
           "TWITTER_ACCESS_TOKEN": "",
           "TWITTER_ACCESS_TOKEN_SECRET": "",
           "TWITTER_ACCESS_SECRET": "",
           "TWITTER_ENABLE_POST": "false",
           "TWITTER_ENABLE_REPLIES": "false",
-          "TWITTER_ENABLE_ACTIONS": "false",
-          "SERVER_PORT": "3000",
-          "NODE_ENV": "production"
+          "TWITTER_ENABLE_ACTIONS": "false"
         }
       },
       "execution": {
