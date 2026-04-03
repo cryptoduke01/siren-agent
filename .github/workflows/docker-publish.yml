@@ -1,6 +1,10 @@
-# Build and push to Docker Hub without a local Docker install (e.g. older Macs).
-# GitHub → repo Settings → Secrets → add DOCKERHUB_USERNAME and DOCKERHUB_TOKEN
-# (token from hub.docker.com → Account Settings → Security → New Access Token)
+# Option C: push images from GitHub — no Docker on your Mac required.
+#
+# 1. Docker Hub → Account Settings → Security → New Access Token (Read, Write, Delete)
+# 2. GitHub repo → Settings → Secrets and variables → Actions → New repository secret:
+#    - DOCKERHUB_USERNAME = your Docker Hub username (e.g. dukedotsol)
+#    - DOCKERHUB_TOKEN   = that token (not your account password)
+# 3. Actions tab → "Docker Hub publish" → Run workflow (or push to main)
 
 name: Docker Hub publish
 
@@ -9,11 +13,28 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   docker:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check Docker Hub secrets
+        env:
+          DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DH_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -z "$DH_USER" ] || [ -z "$DH_TOKEN" ]; then
+            echo "::error::Add Actions secrets DOCKERHUB_USERNAME and DOCKERHUB_TOKEN."
+            echo "GitHub → Settings → Secrets and variables → Actions → New repository secret"
+            echo "Docker Hub → Account Settings → Security → New Access Token"
+            exit 1
+          fi
 
       - uses: docker/login-action@v3
         with:
@@ -26,6 +47,9 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/amd64
+          provenance: false
+          sbom: false
           tags: |
             dukedotsol/siren-agent:latest
             dukedotsol/siren-agent:v0.1.0

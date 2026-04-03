@@ -110,16 +110,39 @@ Note:
 
 ## Deployment
 
-1. Build and publish your image:
+### Option A — Docker on your machine
 
 ```bash
 docker build -t your-dockerhub-user/siren-agent:latest .
 docker push your-dockerhub-user/siren-agent:latest
 ```
 
-2. Update the image field in `nos_job_def/nosana_eliza_job_definition.json`
+### Option C — GitHub Actions (no local Docker)
 
-3. Fill production env values:
+Use this if Docker Desktop does not run on your Mac (common on older hardware).
+
+1. **Docker Hub access token**  
+   Log in at [hub.docker.com](https://hub.docker.com) → **Account Settings** → **Security** → **New Access Token** (Read/Write). Copy the token once.
+
+2. **GitHub Actions secrets** (repo **Settings** → **Secrets and variables** → **Actions**):
+
+   | Name | Value |
+   |------|--------|
+   | `DOCKERHUB_USERNAME` | Your Hub username (e.g. `dukedotsol`) |
+   | `DOCKERHUB_TOKEN` | The token from step 1 (not your Hub password) |
+
+3. **Run the workflow**  
+   **Actions** → **Docker Hub publish** → **Run workflow**, or push to `main`.
+
+4. On success, Hub will show **`dukedotsol/siren-agent:latest`** (edit `.github/workflows/docker-publish.yml` if your namespace differs).
+
+5. Continue with Nosana using `nos_job_def/nosana_eliza_job_definition.json` and the same image name.
+
+### After the image exists
+
+1. Update the image field in `nos_job_def/nosana_eliza_job_definition.json` if needed.
+
+2. Fill production env values:
 
 - `HELIUS_API_KEY`
 - `TELEGRAM_BOT_TOKEN`
